@@ -573,10 +573,10 @@ CREATE TABLE IF NOT EXISTS `umsinstall_targetevent` (
 
 -- --------------------------------------------------------
 INSERT INTO `umsinstall_channel` (`channel_id`, `channel_name`, `create_date`, `user_id`, `type`, `platform`, `active`) VALUES
-(1, "安卓市场", "2011-11-22 13:54:39", 1, "system", 1, 1),
-(2, "机锋市场", "2011-11-22 13:54:47", 1, "system", 1, 1),
-(3, "安智市场", "2011-11-22 13:54:57", 1, "system", 1, 1),
-(4, "XDA市场", "2011-11-22 13:55:03", 1, "system", 1, 1),
+(1, "Test", "2011-11-22 13:54:39", 1, "system", 1, 1),
+(2, "Official", "2011-11-22 13:54:47", 1, "system", 1, 1),
+(3, "Google Market", "2011-11-22 13:54:57", 1, "system", 1, 1),
+(4, "Others", "2011-11-22 13:55:03", 1, "system", 1, 1),
 (5, "AppStore", "2011-12-03 13:49:25", 1, "system", 2, 1),
 (6, "Windows Phone Store", "2011-12-03 13:49:25", 1, "system", 3, 1);
 -- --------------------------------------------------------
