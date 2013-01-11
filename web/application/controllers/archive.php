@@ -20,7 +20,7 @@ class Archive extends CI_Controller
 	{
 		parent::__construct();
 		$this->load->helper('date');
-		$this->load->model('alert/sendemail','sendemail');
+		//$this->load->model('alert/sendemail','sendemail');
 	}
 	
 	/*
@@ -47,11 +47,13 @@ class Archive extends CI_Controller
 		$logdate = date('Y-m-d H:i:s',$timezonestimestamp);
 		log_message("debug","ETL runfact at $logdate and fromTime= $fromTime toTime= $toTime");
   		$dwdb->query("call runfact('$fromTime','$toTime')");
+  		echo "call runfact('$fromTime','$toTime')<br/>";
 
 		//run sum
 		$logdate = date('Y-m-d H:i:s',$timezonestimestamp);
   		log_message("debug","ETL runsum at $logdate and rundate = $date");
   		$dwdb->query("call runsum('$date')");
+  		echo "call runsum('$date')";
 	}
 	
 	/*
@@ -134,7 +136,9 @@ class Archive extends CI_Controller
 	
 	function archiveCompareValue($date){
 // 		$timezonestimestamp = gmt_to_local(local_to_gmt(), $this->config->item('timezones'));
+
 // 		$timezonestime = date ( 'Y-m-d H:i:m', $timezonestimestamp );
+
 // 		$date = date('Y-m-d',strtotime("-1 day", strtotime($timezonestime)));
 		$this->sendemail->comparevalue($date);
 	}
