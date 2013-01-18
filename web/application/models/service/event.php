@@ -60,7 +60,7 @@ class Event extends CI_Model
 		$event_identifier=$event->event_identifier;
 		$getEventid=$this->isEventidAvailale($product_id,$event_identifier);
 		$active = $this->getActivebyEventid($getEventid,$product_id);
-		if ($active== 0 && $getEventid==null)
+		if ($active== 0 || $getEventid==null)
 		{
 			return NULL;
 		}else
