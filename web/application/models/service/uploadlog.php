@@ -51,21 +51,17 @@ class Uploadlog extends CI_Model
 				}
 			}
 		}
-		$msg .= '1';
 		$clientData = isset($content->clientData)?$content->clientData:"";
 		if(isset($clientData))
 		{
-			$msg .= '2';
 			if(is_array($clientData))
 			{
 				foreach($clientData as $clientdataInfo)
 				{
 					$this->clientdata->addClientdata($clientdataInfo);
-					$msg .= '3';
 				}
 			}else{
 				$this->clientdata->addClientdata($clientData);
-				$msg .= '4';
 			}
 		}
 		$activityInfo = isset($content->activityInfo)?$content->activityInfo:"";
