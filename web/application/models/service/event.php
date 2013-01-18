@@ -54,19 +54,18 @@ class Event extends CI_Model
 			return 0;
 		}
 	}
-	function addEvent($event)
+	function addEvent($key, $event)
 	{
-		$key=$event->appkey;
 		$product_id=$this->getProductid($key);
 		$event_identifier=$event->event_identifier;
 		$getEventid=$this->isEventidAvailale($product_id,$event_identifier);
 		$active = $this->getActivebyEventid($getEventid,$product_id);
-		if ($active== 0 ||$getEventid==null)
+		if ($active== 0 && $getEventid==null)
 		{
 			return NULL;
-		}
-		else 
+		}else
 		{
+		
 			$nowtime = date ( 'Y-m-d H:i:s');
 			if(isset($event->time)){
 				$nowtime=$event->time;
@@ -76,7 +75,7 @@ class Event extends CI_Model
 				}
 			}
 		$data = array(
-			'productkey' => $event->appkey,
+			'productkey' => $key,
 			'event_id'=> $getEventid,
 			'label'=>isset($event->label)?$event->label:'',
 			'clientdate' => $nowtime,

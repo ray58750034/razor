@@ -28,51 +28,56 @@ class Uploadlog extends CI_Model
 	function addUploadlog($content)
 	{
 		$msg = '';
-//		$eventInfo = $content->eventInfo;
-		$eventInfo=isset($content->eventInfo)?$content->eventInfo:"";
-		if(isset($eventInfo))
-		{
-			if(is_array($eventInfo))
+		$key = isset($content->appkey)?$content->appkey:null;
+		if($key!=null){
+			$clientData = isset($content->clientData)?$content->clientData:"";
+			if(isset($clientData))
 			{
-				foreach ($eventInfo as $event)
+				if(is_array($clientData))
 				{
-					$this->event->addEvent($event);
+					foreach($clientData as $clientdataInfo)
+					{
+						$this->clientdata->addClientdata($key, $clientdataInfo);
+					}
+				}else{
+					$this->clientdata->addClientdata($key, $clientData);
 				}
 			}
-		}
-		$errorInfo =isset($content->errorInfo)?$content->errorInfo:"";
-		if(isset($errorInfo))
-		{
-			if(is_array($errorInfo))
+	//		$eventInfo = $content->eventInfo;
+			$eventInfo=isset($content->eventInfo)?$content->eventInfo:"";
+			if(isset($eventInfo))
 			{
-				foreach($errorInfo as $errorlog)
+				if(is_array($eventInfo))
 				{
-					$this->userlog->addUserlog($errorlog);
+					foreach ($eventInfo as $event)
+					{
+						$this->event->addEvent($key, $event);
+					}
 				}
 			}
-		}
-		$clientData = isset($content->clientData)?$content->clientData:"";
-		if(isset($clientData))
-		{
-			if(is_array($clientData))
+			$errorInfo =isset($content->errorInfo)?$content->errorInfo:"";
+			if(isset($errorInfo))
 			{
-				foreach($clientData as $clientdataInfo)
+				if(is_array($errorInfo))
 				{
-					$this->clientdata->addClientdata($clientdataInfo);
+					foreach($errorInfo as $errorlog)
+					{
+						$this->userlog->addUserlog($key, $errorlog);
+					}
 				}
-			}else{
-				$this->clientdata->addClientdata($clientData);
 			}
-		}
-		$activityInfo = isset($content->activityInfo)?$content->activityInfo:"";
-		if(isset($activityInfo))
-		{
-			if(is_array($activityInfo))
+			$activityInfo = isset($content->activityInfo)?$content->activityInfo:"";
+			if(isset($activityInfo))
 			{
-				foreach ($activityInfo as $erroractivity) {
-					$this->activitylog->addActivitylog($erroractivity);
+				if(is_array($activityInfo))
+				{
+					foreach ($activityInfo as $erroractivity) {
+						$this->activitylog->addActivitylog($key, $erroractivity);
+					}
 				}
 			}
+		}else{
+			$msg = "appkey required!";
 		}
 		return $msg;
 	}	

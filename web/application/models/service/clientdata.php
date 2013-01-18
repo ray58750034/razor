@@ -25,7 +25,7 @@ class Clientdata extends CI_Model
 		$this->load->model('service/utility','utility');
 	}	
 	
-	function addClientdata($clientdata)
+	function addClientdata($key, $clientdata)
 	{  
 		$ip=$this->utility->getOnlineIP();
         $i=isset($clientdata->mccmnc)?$clientdata->mccmnc:''; 
@@ -47,7 +47,7 @@ class Clientdata extends CI_Model
          	}
         }	                      	 
 		$data = array(
-			'productkey' => $clientdata->appkey,
+			'productkey' => $key,
 			'platform'=> $clientdata->platform,
 			'osversion'=> $clientdata->os_version,
 			'language' => $clientdata->language,

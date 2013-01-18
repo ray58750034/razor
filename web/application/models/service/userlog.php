@@ -20,7 +20,7 @@ class Userlog extends CI_Model
 		$this->load->database();
 	}	
 	
-	function addUserlog($userlog)
+	function addUserlog($key, $userlog)
 	{
 		
 		$strArr=explode("\n",$userlog->stacktrace);
@@ -41,7 +41,7 @@ class Userlog extends CI_Model
 			}
 		}
 		$data = array(
-			'appkey' => $userlog->appkey,
+			'appkey' => $key,
 		    'title' => $title,
 			'stacktrace'=> $userlog->stacktrace,
 			'os_version'=> $userlog->os_version,

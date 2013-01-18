@@ -20,7 +20,7 @@ class Activitylog extends CI_Model
 		$this->load->database();
 	}	
 	
-	function addActivitylog($activitylog)
+	function addActivitylog($key, $activitylog)
 	{
 		$nowtime = date ( 'Y-m-d H:i:s');
 		if(isset($activitylog->start_millis)){
@@ -39,7 +39,7 @@ class Activitylog extends CI_Model
 			}
 		}
 		$data = array(
-			'appkey' => $activitylog->appkey,
+			'appkey' => $key,
 			'session_id'=> $activitylog->session_id,
 			'start_millis'=> $nowtime,
 			'end_millis' => $nowtime2,
