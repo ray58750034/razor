@@ -720,10 +720,11 @@ width: 100%;
 margin: -5px 0 0 0;
 }
 
-.tablesorter td{
+.tablesorter td,th{
 margin: 0;
 padding: 0;
 border-bottom: 1px dotted #ccc;
+text-align:center;
 }
 
 .tablesorter thead tr {
