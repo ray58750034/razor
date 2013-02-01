@@ -66,6 +66,73 @@ class ProductModel extends CI_Model {
 		$query = $dwdb->query ( $sql );
 		return $query;
 	}
+	
+	// channels within the timephase Statistics Data
+	// newusers/startusers/allusers/usingtime
+	function getChannelData($productId, $channel_id, $fromTime, $toTime) {
+		$ret = array ();
+		// $fromTime = $this->getReportStartDate($currentProduct,$fromTime);
+		$dwdb = $this->load->database ( 'dw', TRUE );
+		$channelname = $this->getMarketNameById ( $channel_id );
+		$sql="select d.datevalue,p.channel_id,p.channel_name,
+			ifnull(startusers,0) startusers,
+			ifnull(newusers,0) newusers,
+			(select ifnull(max(allusers),0) 
+			from " . $dwdb->dbprefix ( 'sum_basic_channel' ) . " dp,
+			" . $dwdb->dbprefix ( 'dim_date' ) . " da
+			where da.datevalue=d.datevalue 
+			and dp.product_id=$productId and
+			dp.date_sk<=da.date_sk and 
+			dp.channel_id=p.channel_id) allusers,
+			ifnull(sessions,0) sessions,
+			ifnull(usingtime,0) usingtime
+			from (select date_sk,datevalue 
+			from " . $dwdb->dbprefix ( 'dim_date' ) . "  where
+			datevalue between '$fromTime' and '$toTime')  d 
+			cross join 
+			(select pp.channel_id,pp.channel_name 
+			from " . $dwdb->dbprefix ( 'dim_product' ) . " pp
+			where pp.product_id = $productId and
+			pp.product_active=1 and pp.channel_active=1
+			 and pp.version_active=1  and pp.channel_id = $channel_id
+			 group by pp.channel_id,pp.channel_name) p
+			left join (select * from 
+			" . $dwdb->dbprefix ( 'sum_basic_channel' ) . " 
+			where product_id=$productId) s  
+			on d.date_sk = s.date_sk 
+			and s.channel_id = p.channel_id";			
+		$query = $dwdb->query ( $sql );
+		if ($query != null && $query->num_rows > 0) {
+			
+			$arr = $query->result_array ();
+			
+			$content_arr = array ();
+			for($i = 0; $i < count ( $arr ); $i ++) {
+				$row = $arr [$i];
+				$channel_name = $row ['channel_name'];
+				$allkey = array_keys ( $content_arr );
+				if (! in_array ( $channel_name, $allkey ))
+					$content_arr [$channel_name] = array ();
+				$tmp = array ();
+				$tmp ['activeusers'] = $row ['startusers'];
+				$tmp ['allusers'] = $row ['allusers'];
+				$tmp ['newusers'] = $row ['newusers'];
+				$tmp ['datevalue'] = $row ['datevalue'];
+				$tmp ['sessions'] = $row ['sessions'];
+				$tmp ['usingtime'] = $row ['usingtime'];
+				
+				array_push ( $content_arr [$channel_name], $tmp );
+			
+			}
+			$all_version_name = array_keys ( $content_arr );
+			$ret ['sql'] = $sql;
+			$ret ['content'] = $content_arr;
+		
+		}
+		return $ret;
+	
+	}
+	
 	// channels within the timephase Statistics Data
 	// newusers/startusers/allusers/usingtime
 	function getAllMarketData($channel_id, $fromTime, $toTime) {
