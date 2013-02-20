@@ -474,8 +474,85 @@ from   " . $dwdb->dbprefix ( 'fact_activeusers_clientdata' ) . "   f,
 		return $activeUserArray;
 	
 	}
+    
+    function getProductList($userId, $today, $yesterday){
+        $getIDsql = "select p.id,p.name,f.name platform
+        from " . $this->db->dbprefix ( 'product' ) . "  p,
+        " . $this->db->dbprefix ( 'platform' ) . "  f
+        where p.product_platform = f.id and
+        p.user_id=$userId and p.active = 1
+        order by p.id desc;";
+        
+        $getIDsqlResult = $this->db->query ( $getIDsql );
+
+        
+        $vidadb = $this->load->database('vida', TRUE);
+        $querytoday = "SELECT product_id, period, sum(totaluser), sum(activeuser), sum(updateuser), sum(totalsession)  FROM ".$vidadb->dbprefix('report_daily_user')."` WHERE period=`".$today." 00:00:00"."` group by period "
+        
+        die("querytoday is $querytoday");
+		
+		$dwdb = $this->load->database ( 'dw', TRUE );
+				$todayquery = $dwdb->query ( $this->getsqlsentence ( $today, $userId ) );
+		$yestadayquery = $dwdb->query ( $this->getsqlsentence ( $yestoday, $userId ));
+		$appList = array ();
+		$flag = 0;
+		if ($getIDsqlResult != null && $getIDsqlResult->num_rows () > 0) {
+			foreach ( $getIDsqlResult->result () as $row ) {
+				$app = array ();
+				$app ['name'] = $row->name;
+				$app ['id'] = $row->id;
+				foreach ( $todayquery->result () as $todaydata ) {
+					
+					foreach ( $yestadayquery->result () as $yestodaydata ) {
+						if ($row->name == $todaydata->product_name && $todaydata->product_name == $yestodaydata->product_name) {
+							$app ['newuser'] = $todaydata->newusers . '/' . $yestodaydata->newusers;
+							$app ['startcount'] = $todaydata->sessions . '/' . $yestodaydata->sessions;
+							$app ['startuser'] = $todaydata->startusers . '/' . $yestodaydata->startusers;
+							$app ['newUserYestoday'] = $yestodaydata->newusers;
+							$app ['startCountYestoday'] = $yestodaydata->sessions;
+							$app ['startUserYestoday'] = $yestodaydata->startusers;
+							
+							$app ['newUserToday'] = $todaydata->newusers;
+							$app ['startCountToday'] = $todaydata->sessions;
+							$app ['startUserToday'] = $todaydata->startusers;
+							$app ['platform'] = $todaydata->platform;
+							$app ['totaluser'] = $todaydata->allusers;
+							array_push ( $appList, $app );
+							$flag = 1;
+							break;
+						}
+                        
+					}
+					if ($flag == 1) {
+						break;
+					}
+                    
+				}
+				
+				if ($flag == 0) {
+					$app ['newuser'] = '0' . '/' . '0';
+					$app ['startcount'] = '0' . '/' . '0';
+					$app ['startuser'] = '0' . '/' . '0';
+					$app ['newUserYestoday'] = '0' . '/' . '0';
+					$app ['startCountYestoday'] = '0' . '/' . '0';
+					$app ['startUserYestoday'] = '0' . '/' . '0';
+					
+					$app ['newUserToday'] = 0;
+					$app ['startCountToday'] = 0;
+					$app ['startUserToday'] = 0;
+					$app ['platform'] = $row->platform;
+					$app ['totaluser'] = 0;
+					array_push ( $appList, $app );
+				}
+				$flag = 0;
+                
+			}
+		}
+		
+		return $appList;
+    }
 	
-	function getProductListByPlatform($platformId, $userId, $today, $yestoday) {
+	function getProductListByPlatform1($platformId, $userId, $today, $yestoday) {
 		
 		$getIDsql = "select p.id,p.name,f.name platform 
 		             from " . $this->db->dbprefix ( 'product' ) . "  p, 

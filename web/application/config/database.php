@@ -52,7 +52,7 @@ $db['default']['hostname'] = 'HOSTNAME';
 $db['default']['username'] = 'USERNAME';
 $db['default']['password'] = 'PASSWORD';
 $db['default']['database'] = 'DATABASE';
-$db['default']['dbdriver'] = 'mysql';
+$db['default']['dbdriver'] = 'mysqli';
 $db['default']['dbprefix'] = 'DBPREFIX';
 $db['default']['pconnect'] = FALSE;
 $db['default']['db_debug'] = TRUE;
@@ -69,7 +69,7 @@ $db['dw']['hostname'] = 'DWHOSTNAME';
 $db['dw']['username'] = 'DWUSERNAME';
 $db['dw']['password'] = 'DWPASSWORD';
 $db['dw']['database'] = 'DWDATABASE';
-$db['dw']['dbdriver'] = 'mysql';
+$db['dw']['dbdriver'] = 'mysqli';
 $db['dw']['dbprefix'] = 'DWDBPREFIX';
 $db['dw']['pconnect'] = FALSE;
 $db['dw']['db_debug'] = TRUE;
@@ -80,6 +80,23 @@ $db['dw']['dbcollat'] = 'utf8_general_ci';
 $db['dw']['swap_pre'] = '';
 $db['dw']['autoinit'] = TRUE;
 $db['dw']['stricton'] = FALSE;
+    
+$db['vida']['hostname'] = 'VIDAHOSTNAME';
+$db['vida']['username'] = 'VIDAUSERNAME';
+$db['vida']['password'] = 'VIDAPASSWORD';
+$db['vida']['database'] = 'VIDADATABASE';
+$db['vida']['dbdriver'] = 'mysqli';
+$db['vida']['dbprefix'] = 'VIDADBPREFIX';
+$db['vida']['pconnect'] = FALSE;
+$db['vida']['db_debug'] = TRUE;
+$db['vida']['cache_on'] = FALSE;
+$db['vida']['cachedir'] = '';
+$db['vida']['char_set'] = 'utf8';
+$db['vida']['dbcollat'] = 'utf8_general_ci';
+$db['vida']['swap_pre'] = '';
+$db['vida']['autoinit'] = TRUE;
+$db['vida']['stricton'] = FALSE;
+
 
 
 /* End of file database.php */

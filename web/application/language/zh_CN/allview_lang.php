@@ -135,6 +135,7 @@ $lang['m_rpt_statisticsOverview']='统计概况';
 $lang['m_rpt_dashboard']='控制面板';
 $lang['m_rpt_channels']='分布渠道';
 $lang['m_rpt_versions']='版本分布';
+$lang['m_rpt_vida'] = 'Vida';
 $lang['m_rpt_users']='用户';
 $lang['m_rpt_frequencyOfUse']='使用频率';
 $lang['m_rpt_usageDuration']='使用时长';
@@ -274,6 +275,9 @@ $lang['v_rpt_mk_channelNameE']='输入的渠道名称不合法！';
 $lang['v_rpt_ve_tillYesterday']='今日版本数据';
 $lang['v_rpt_ve_appVersion']='应用版本';
 $lang['v_rpt_ve_changingTrends']='版本变化趋势';
+$lang['v_rpt_ve_changingTrends_hourly']='每小时版本变化趋势';
+$lang['v_rpt_ve_changingTrends_daily']='每天版本变化趋势';
+$lang['v_rpt_ve_changingTrends_monthly']='每月版本变化趋势';
 $lang['v_rpt_ve_trendsAnalytics']='新增用户版本对比趋势分析';
 $lang['v_rpt_ve_trendActiveUsers'] = '活跃用户版本对比趋势分析';
 $lang['v_rpt_ve_comparison']='版本分布对比';
@@ -288,6 +292,13 @@ $lang['v_rpt_ve_viewYesterday'] = "查看昨日";
 $lang['v_rpt_ve_ersionSY'] = "昨日版本统计";
 $lang['v_rpt_ve_competeLoad'] = "数据加载完成！";
 $lang['v_rpt_ve_waitLoad'] = "正在加载数据，请稍候...";
+    
+//view---report---vida
+$lang['v_rpt_vi_title']='Vida用户统计';
+$lang['v_rpt_vi_appVersion']='应用版本';
+$lang['v_rpt_vi_channelName']='渠道名称';
+$lang['v_rpt_vi_totalUser']='累计用户(%)';
+$lang['v_rpt_vi_sessionCount']='总启动次数(%)';
 
 //view---report----frequency of use/usefrequency
 $lang['v_rpt_uf_distribution']='启动次数分布';

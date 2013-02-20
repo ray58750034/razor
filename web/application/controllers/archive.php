@@ -140,7 +140,7 @@ class Archive extends CI_Controller
 // 		$timezonestime = date ( 'Y-m-d H:i:m', $timezonestimestamp );
 
 // 		$date = date('Y-m-d',strtotime("-1 day", strtotime($timezonestime)));
-		$this->sendemail->comparevalue($date);
+//		$this->sendemail->comparevalue($date);
 	}
 	
 	

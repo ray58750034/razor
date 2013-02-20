@@ -160,3 +160,5 @@ pip-log.txt
 
 #Subversion
 .svn
+web/Razor/Razor.xcodeproj/project.pbxproj
+web/Razor/Razor.xcodeproj/project.xcworkspace/contents.xcworkspacedata

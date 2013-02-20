@@ -244,6 +244,7 @@ type="text/javascript"></script>
 			<!--<li class="icn_settings"><?php // echo anchor('/report/userbasic', lang('header_asideanaly_basicstatistics')) ;?></li>-->
 			<li class="icn_dis_channel"><?php echo anchor("/report/market/viewMarket", lang('m_rpt_channels'));?></li>
 			<li class="icn_version"><?php echo anchor('/report/version/', lang('m_rpt_versions'));?></li>
+			<li class="icn_dis_channel"><?php echo anchor('/report/vida/', lang('m_rpt_vida'));?></li>
 		</ul>
 		<h3><?php echo lang('m_rpt_users') ?></h3>
 		<ul class="toggle">

@@ -341,6 +341,14 @@ class Common extends CI_Model {
 		}
 		return $defdate;
 	}
+    function getHourList($from,$to){
+        $defdate=array();
+        for ($i=strtotime($from);$i<=strtotime($to);$i+=3600){
+			if(!in_array(date('Y-m-d H',$i), $defdate))
+				array_push($defdate, date('Y-m-d H',$i));
+		}
+		return $defdate;
+    }
 	function export($from, $to, $data) {
 		$productId = $this->getCurrentProduct ()->id;
 		$productName = $this->getCurrentProduct ()->name;

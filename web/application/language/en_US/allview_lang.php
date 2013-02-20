@@ -135,6 +135,7 @@ $lang['m_rpt_statisticsOverview']='Statistics Overview';
 $lang['m_rpt_dashboard']='Dashboard';
 $lang['m_rpt_channels']='Channels';
 $lang['m_rpt_versions']='Versions';
+$lang['m_rpt_vida']='Vida';
 $lang['m_rpt_users']='Users';
 $lang['m_rpt_frequencyOfUse']='Frequency of Use';
 $lang['m_rpt_usageDuration']='Usage Duration';
@@ -274,6 +275,9 @@ $lang['v_rpt_mk_channelNameE']='The input value of channel name is illegal!';
 $lang['v_rpt_ve_tillYesterday']='Version Data Today';
 $lang['v_rpt_ve_appVersion']='App Version';
 $lang['v_rpt_ve_changingTrends']='Version Changing Trends';
+$lang['v_rpt_ve_changingTrends_hourly']='Version Changing Trends Hourly';
+$lang['v_rpt_ve_changingTrends_daily']='Version Changing Trends Daily';
+$lang['v_rpt_ve_changingTrends_monthly']='Version Changing Trends Monthly';
 $lang['v_rpt_ve_trendsAnalytics']='Trend analytics of version comparison of new users';
 $lang['v_rpt_ve_trendActiveUsers'] = 'Trend analytics of version comparison of active users';
 $lang['v_rpt_ve_comparison']='Comparison of Versions';
@@ -486,20 +490,31 @@ $lang['v_man_ev_errorInputEI']='The input value of event id is illegal!';
 $lang['v_man_ev_errorInputEN']='The input value of event name is illegal!';
 
 //view---manage---exception
+
 $lang['v_man_ev_productalter']='Smart Notification';
+
 $lang['v_man_ev_productAlertList']='Smart Notification list';
+
 $lang['v_man_ev_addAlertlab']='Add Smart Notification';
+
 $lang['v_rpt_el_alertlab']='Smart Notification';
 $lang['v_man_ev_modifyAlertlab']='Modify Smart Notification';
+
 $lang['v_rpt_el_condition']='Deviation';
+
 $lang['v_man_ev_editalertlab']='Action';
+
 $lang['v_rpt_el_add']='Add';
 $lang['v_rpt_el_set']='set';
 $lang['v_rpt_el_email']='E-mail';
+
 $lang['v_rpt_el_note']='please input your email, multiple emails seperated by \' ; \'';
+
 $lang['v_rpt_el_noteofemail']='Please enter at least one e-mail address';
+
 $lang['v_rpt_el_noteofcondition']='Please enter reminded range';
 $lang['v_rpt_addlab']='Add Smart Notification...';
+
 $lang['v_rpt_addok']='Add completed';
 
 
@@ -517,12 +532,17 @@ The reason you receive this email is the Cobub Razor administrator add your emai
  <hr>
 Cobub Razor System
 
+
 ";
 
 $lang['t_newUserException']='New User Data Exception';
+
 $lang['t_activeUserException']='Active User Data Exception';
+
 $lang['t_sessionsException']='The Starting Times Data Exception';
+
 $lang['t_accumulatedUsersException']='Accumulated User Data Exception';
+
 $lang['t_averageUsageDurationException']='Average Duration Data Exception';
 
 //view---manage---channel
@@ -736,6 +756,7 @@ $lang['g_downloadSVG']='Download SVG vector image';
 $lang['c_user']='System Management';
 $lang['c_product']='App';
 $lang['c_welcom']='Welcome';
+
 $lang['c_productbasic']='App Statistics Overview';
 $lang['c_auth']='User';
 $lang['c_autoupdate']='Auto Update';
@@ -760,7 +781,9 @@ $lang['c_userremain']='User Retention';
 $lang['c_pagevisit']='Page Visit';
 $lang['c_network']='Network Statistics';
 $lang['c_funnels']='Funnels';
+
 $lang['c_erroronos']='Error On OS';
+
 $lang['c_errorondevice']='Error On Device';
 
 /***************************************widget report name**********************************************/
@@ -769,57 +792,103 @@ $lang['w_addreport']='Add Reports';
 $lang['w_isaddreport']='Pin to Dashboard?';
 $lang['w_addreportsuccess']='The report successfully added';
 $lang['w_addreportrepeat']='Please do not repeat add the report';
+
 $lang['w_addfullreport']='Add widgets';
+
 $lang['w_addhalfreport']='Add half widgets';
+
 $lang['w_savereportlocation']='Save widgets location';
+
 $lang['w_errorlog']='Errors of Version';
+
 $lang['w_errorlogondevice']='Errors on Device';
+
 $lang['w_errorlogonos']='Errors on OS';
+
 $lang['w_conversions']='Conversions';
+
 $lang['w_resolutioninfo']='TOP 10 Resolution';
+
 $lang['w_osversion']='TOP 10 OS Version';
+
 $lang['w_carrier']='TOP 10 Carrier';
+
 $lang['w_network']='TOP 10 Networking';
+
 $lang['w_devicetype']='TOP 10 Devices';
+
 $lang['w_visitpath']='Visit Path';
+
 $lang['w_regioncountry']='Top 10 Nations';
+
 $lang['w_regionprovince']='Top 10 Provinces';
+
 $lang['w_sessiondistribution']='Sessions Distribution';
+
 $lang['w_userremain']='Retention';
+
 $lang['w_usadgeduration']='Usage Duration';
+
 $lang['w_phaseusetime']='Time-phased Users';
+
 $lang['w_userbehavorview']='Overview of User Behavior';
+
 $lang['w_channelmarket']='Time Segment Analysis';
+
 $lang['w_versionview']='Version Changing Trends';
 $lang['w_overmaxnum']='Excessive number of report you addition';
 /***************************************markevent**********************************************/
+
 $lang['m_title']='Title';
+
 $lang['m_description']='Description';
+
 $lang['m_marktime']='Date';
+
 $lang['m_rights']='Rights';
+
 $lang['m_submit']='Submit';
+
 $lang['m_public']='Public';
+
 $lang['m_private']='Private';
+
 $lang['m_operate']='Action';
+
 $lang['m_newsreport']='Annotation Edit';
+
 $lang['m_modify']='Modify Info';
+
 $lang['m_delete']='Delete';
+
 $lang['m_isdel']='Are you sure to delete?';
+
 $lang['m_waittingdel']='Waitting ……';
+
 $lang['m_delsuccess']='Delete success';
+
 $lang['m_errordeltryagain']='Error delete,Please try again a later';
+
 $lang['m_faildeloninfo']='Failed delete,News Does Not Exists';
+
 $lang['m_tiptitle']='Please Enter The Title';
+
 $lang['m_tipdesc']='Please Enter The Description';
+
 $lang['m_subsuccess']='Submit Success';
+
 $lang['m_modifysuccess']='Modify Success';
+
 $lang['m_changesubtomodify']='News Already exists ,Modify？';
+
 $lang['m_markeventlist']='Annotation List';
+
 $lang['m_user']='Mark User';
 $lang['m_eventsDetail']='Event Detail';
 $lang['m_dateevents']='Annotations';
 $lang['m_viewmark_Detail']='View Detail';
 /*****************************Compare Product*****************************************/
+
 $lang['c_compare_product']='Compare Product';
 $lang['c_compare2two4']='Please select 2-4 products';
 /*********************************Suspended box*************************************/

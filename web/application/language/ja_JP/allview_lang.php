@@ -132,6 +132,7 @@ $lang['m_rpt_statisticsOverview']	="統計情報の概要";
 $lang['m_rpt_dashboard']	=	'固定値一覧';
 $lang['m_rpt_channels']	=	'ダッシュボード';
 $lang['m_rpt_versions']	=	'チャンネル';
+$lang['m_rpt_vida'] = 'Vida';
 $lang['m_rpt_users']	=	'バージョン';
 $lang['m_rpt_frequencyOfUse']	=	'ユーザー';
 $lang['m_rpt_usageDuration']	=	'利用回数';
@@ -270,7 +271,11 @@ $lang['v_rpt_mk_channelNameE']	=	'不正なチャンネル名が入力されま�
 //view---report----versions		
 $lang['v_rpt_ve_tillYesterday']	=	'昨日までのバージョンデータ';
 $lang['v_rpt_ve_appVersion']	=	'アプリバージョン';
-$lang['v_rpt_ve_changingTrends']	=	'バージョン変更のトレンド';
+$lang['v_rpt_ve_changingTrends']= 'バージョン変更のトレンド';
+$lang['v_rpt_ve_changingTrends_hourly']= 'バージョン変更のトレンド';
+$lang['v_rpt_ve_changingTrends_daily']='バージョン変更のトレンド';
+$lang['v_rpt_ve_changingTrends_monthly']='バージョン変更のトレンド';
+    
 $lang['v_rpt_ve_trendsAnalytics']	=	'新規ユーザーのバージョン比較のトレンド解析';
 $lang['v_rpt_ve_trendActiveUsers']	=	 'アクティブユーザーのバージョン比較のトレンド解析';
 $lang['v_rpt_ve_comparison']	=	'バージョン間比較';
@@ -285,7 +290,7 @@ $lang['v_rpt_ve_viewYesterday']	=	 "昨日の閲覧";
 $lang['v_rpt_ve_ersionSY']	=	 "昨日の統計量のバージョン";
 $lang['v_rpt_ve_competeLoad']	=	 "データ読込みが完了しました!";
 $lang['v_rpt_ve_waitLoad']	=	 "データ読み込み中です...";
-		
+    
 //view---report----frequency of use/usefrequency		
 $lang['v_rpt_uf_distribution']		='セッション配信';
 
