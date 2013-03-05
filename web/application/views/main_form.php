@@ -89,8 +89,9 @@
     				<td><?php echo $row['startcount'];?></td>
     				
     				<td>
-    				<?php echo anchor('/report/productbasic/view/'.$row['id'],lang('v_viewReport'));?>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-    				<a href="javascript:if(confirm('<?php echo  lang('v_deleteAppPrompt')?>'))location='<?php echo site_url();?>/manage/product/delete/<?php echo $row['id'] ;?>'"><?php echo  lang('g_delete')?></a>
+    				<?php //echo anchor('/report/productbasic/view/'.$row['id'],lang('v_viewReport'));?>
+                    <?php echo anchor('/report/vida/view/'.$row['id'],lang('v_viewReport'));?>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    				<!-- <a href="javascript:if(confirm('<?php echo  lang('v_deleteAppPrompt')?>'))location='<?php echo site_url();?>/manage/product/delete/<?php echo $row['id'] ;?>'"><?php echo  lang('g_delete')?></a> -->
 				</tr> 
 			<?php } endif;?>
 			</tbody> 

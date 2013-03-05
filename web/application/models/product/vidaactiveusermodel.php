@@ -50,7 +50,8 @@
         function getChannelHourlyData($productId, $fromdate, $todate){
             $vidadb = $this->load->database ( 'vida', TRUE );
             
-            $sql = "select hu.channel, hu.version, hu.activeuser, hu.updateuser, hu.period from ".$vidadb->dbprefix('report_hourly_user')." hu where hu.period>'$fromdate' and hu.period<'$todate' and hu.product_id=$productId";
+            $sql = "select hu.channel, hu.version, hu.activeuser, hu.updateuser, hu.period from ".$vidadb->dbprefix('report_hourly_user')." hu where hu.period>='$fromdate 00:00:00' and hu.period<'$todate 00:00:00' and hu.product_id=$productId";
+            //die($sql);
             
             $query = $vidadb->query ( $sql );
             
@@ -86,7 +87,7 @@
         function getChannelDailyData($productId, $fromdate, $todate){
             $vidadb = $this->load->database ( 'vida', TRUE );
             
-            $sql = "select hu.channel, hu.version, hu.activeuser, hu.updateuser, hu.period from ".$vidadb->dbprefix('report_daily_user')." hu where hu.period>'$fromdate' and hu.period<'$todate' and hu.product_id=$productId";
+            $sql = "select hu.channel, hu.version, hu.activeuser, hu.updateuser, hu.period from ".$vidadb->dbprefix('report_daily_user')." hu where hu.period>='$fromdate 00:00:00' and hu.period<'$todate 00:00:00' and hu.product_id=$productId";
             
             $query = $vidadb->query ( $sql );
             
@@ -122,7 +123,7 @@
         function getChannelMonthlyData($productId, $fromdate, $todate){
             $vidadb = $this->load->database ( 'vida', TRUE );
             
-            $sql = "select hu.channel, hu.version, hu.activeuser, hu.updateuser, hu.period from ".$vidadb->dbprefix('report_monthly_user')." hu where hu.period>'$fromdate' and hu.period<'$todate' and hu.product_id=$productId";
+            $sql = "select hu.channel, hu.version, hu.activeuser, hu.updateuser, hu.period from ".$vidadb->dbprefix('report_monthly_user')." hu where hu.period>='$fromdate 00:00:00' and hu.period<'$todate 00:00:00' and hu.product_id=$productId";
             
             $query = $vidadb->query ( $sql );
             

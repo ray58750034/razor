@@ -25,6 +25,36 @@ class newusermodel extends CI_Model{
 	{
 			
 	}
+    
+    function getAlldataofVisits($fromtime, $totime){
+        $vidadb = $this->load->database('vida', TRUE);
+        
+        $sql = "SELECT period, sum(totaluser) as allusers, sum(activeuser) as newusers, sum(updateuser) as startusers, sum(totalsession) as sessions FROM ".$vidadb->dbprefix('report_product_daily')." WHERE period >= DATE_SUB('$fromtime 00:00:00', INTERVAL 1 DAY) and period <= '$totime 23:00:00' GROUP BY period order by period";
+        
+        $query = $vidadb->query($sql);
+        $ret = array();
+		if($query!=null&& $query->num_rows()>0){
+			$lastSessions = 0;
+			foreach($query->result() as $row)
+			{
+                if(!$lastSessions){
+                    $lastSessions = $row->sessions;
+                }else{
+                    $record = array();
+                    $record["datevalue"] = substr($row->period, 0, 10);
+                    $record["newusers"] = $row->newusers;
+                    $record["startusers"] = $row->startusers;
+                    $preSessions = $row->sessions;
+                    $record["sessions"] = $preSessions - $lastSessions;
+                    $lastSessions = $preSessions;
+                    
+                    array_push($ret, $record);
+                }
+			}
+		}
+        return $ret;
+    }
+    
 	//Get all data access trend
 	function getAlldataofVisittrends($fromtime,$totime,$userId){
 		$dwdb = $this->load->database('dw',TRUE);

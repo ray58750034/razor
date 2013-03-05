@@ -34,8 +34,9 @@ class Console extends CI_Controller {
 		$this->data ['category'] = $this->product->getProductCategory ();
 		$this->data ['user_id'] = $this->common->getUserId ();
 		$today = date ( 'Y-m-d', time () );
-		$yestoday = date ( "Y-m-d", strtotime ( "-1 day" ) );		
-		$query = $this->product->getProductListByPlatform ( 1, $this->data ['user_id'], $today, $yestoday );
+		$yestoday = date ( 'Y-m-d', strtotime ( '-1 day' ) );
+        $daybeforeyestoday = date( 'Y-m-d', strtotime( '-2 day'));
+		$query = $this->product->getProductList ($this->data ['user_id'], $today, $yestoday, $daybeforeyestoday );
 		$this->data ['androidList'] = $query;
 		// active users num
 		$this->data ['today_startuser'] = 0;
@@ -95,11 +96,11 @@ class Console extends CI_Controller {
 		$userId = $this->common->getUserId ();
 		$fromTime = $this->common->getFromTime ();
 		$toTime = $this->common->getToTime ();		
-		$query = $this->newusermodel->getAlldataofVisittrends ( $fromTime, $toTime, $userId );		
+		$query = $this->newusermodel->getAlldataofVisits ( $fromTime, $toTime, $userId );		
 		$result = $this->newusermodel->getAlldataofVisittrends($this->common->getPredictiveValurFromTime(),$toTime,$userId);
-		$res =$this->trendmodel->getPredictiveValur($result);		
+		$res =$this->trendmodel->getPredictiveValur($query);
 		$ret ["content"] = $query;
-		$ret["contentofTrend"]=$res;
+		$ret["contentofTrend"]=$query;
 		$ret ["timeTick"] = $this->common->getTimeTick ( $toTime - $fromTime );		
 		echo json_encode ( $ret );
 	}

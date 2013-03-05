@@ -475,7 +475,7 @@ from   " . $dwdb->dbprefix ( 'fact_activeusers_clientdata' ) . "   f,
 	
 	}
     
-    function getProductList($userId, $today, $yesterday){
+    function getProductList($userId, $today, $yesterday, $daybeforeyesterday){
         $getIDsql = "select p.id,p.name,f.name platform
         from " . $this->db->dbprefix ( 'product' ) . "  p,
         " . $this->db->dbprefix ( 'platform' ) . "  f
@@ -485,74 +485,110 @@ from   " . $dwdb->dbprefix ( 'fact_activeusers_clientdata' ) . "   f,
         
         $getIDsqlResult = $this->db->query ( $getIDsql );
 
-        
         $vidadb = $this->load->database('vida', TRUE);
-        $querytoday = "SELECT product_id, period, sum(totaluser), sum(activeuser), sum(updateuser), sum(totalsession)  FROM ".$vidadb->dbprefix('report_daily_user')."` WHERE period=`".$today." 00:00:00"."` group by period "
+
+        $querytoday = "SELECT product_id, max(totaluser) as allusers, sum(activeuser) as newusers, max(updateuser) as startusers, max(totalsession) -min(totalsession) as sessions FROM ".$vidadb->dbprefix('report_hourly_product')." WHERE period >= '$today 00:00:00' and period <= '$today 23:00:00' group by product_id";
         
-        die("querytoday is $querytoday");
-		
-		$dwdb = $this->load->database ( 'dw', TRUE );
-				$todayquery = $dwdb->query ( $this->getsqlsentence ( $today, $userId ) );
-		$yestadayquery = $dwdb->query ( $this->getsqlsentence ( $yestoday, $userId ));
+        $queryyesterday = "SELECT product_id, max(totaluser) as allusers, sum(activeuser) as newusers, max(updateuser) as startusers, max(totalsession) as sessions FROM ".$vidadb->dbprefix('report_daily_product')." WHERE period = '$yesterday 00:00:00' group by product_id";
+        
+        //die("query ".$queryyesterday);
+        
+        $querybeforeyesterday = "SELECT product_id, max(totaluser) as allusers, sum(activeuser) as newusers, max(updateuser) as startusers, max(totalsession) as sessions FROM ".$vidadb->dbprefix('report_daily_product')." WHERE period = '$daybeforeyesterday 00:00:00' group by product_id";
+        
+        //die("query ".$querybeforeyesterday);
+        
+        //$queryyesterday = "SELECT product_id, max(totaluser) as allusers, sum(activeuser) as newusers, sum(updateuser) as startusers, max(totalsession)-min(totalsession) as sessions FROM ".$vidadb->dbprefix('report_product_hourly')." WHERE period >= '$yesterday 00:00:00' and period <= '$yesterday 23:00:00' group by product_id ";
+        
+        $todaydatas = $vidadb->query($querytoday);
+        $yesterdaydatas = $vidadb->query($queryyesterday);
+        $beforeyesterdaydatas = $vidadb->query($querybeforeyesterday);
+        
+        //$todayactive = $vidadb->query($querytodayactiveuser);
+        //$yesterdayactive = $vidadb->query($queryyesterdayactiveuser);
+
 		$appList = array ();
-		$flag = 0;
+        $appDict = array ();
+        
+        foreach ( $todaydatas->result() as $todaydata ){
+            $app = array();
+            
+            $app ['newuser'] = $todaydata->newusers;
+            $app ['startcount'] = $todaydata->sessions;
+            $app ['startuser'] = $todaydata->startusers;
+            
+            $app ['newUserToday'] = $todaydata->newusers;
+            $app ['startCountToday'] = $todaydata->sessions;
+            $app ['startUserToday'] = $todaydata->startusers;
+            $app ['totaluser'] = $todaydata->allusers;
+            
+            $appDict [$todaydata->product_id] = $app;
+        }
+        
+        foreach ( $yesterdaydatas->result() as $yestodaydata ){
+            $app = $appDict [$yestodaydata->product_id];
+            
+            if(!$app){
+                $app = array();
+            }
+            
+            $app ['newuser'] = $app ['newuser'] . '/' . $yestodaydata->newusers;
+            $app ['startuser'] = $app ['startuser'] . '/' . $yestodaydata->startusers;
+            
+            $app ['ystartcount'] = $yestodaydata->sessions;
+            
+            $app ['newUserYestoday'] = $yestodaydata->newusers;
+            $app ['startCountYestoday'] = $yestodaydata->sessions;
+            $app ['startUserYestoday'] = $yestodaydata->startusers;
+            
+            $appDict [$yestodaydata->product_id] = $app;
+        }
+        
+        foreach ( $beforeyesterdaydatas->result() as $beforeyesterdaydata ){
+            $app = $appDict [$beforeyesterdaydata->product_id];
+            
+            if(!$app){
+                $app = array();
+            }
+            
+            $app ['startcount'] = $app['startcount'] . '/' . ($app['ystartcount'] - $beforeyesterdaydata->sessions);
+            $app ['startCountYestoday'] = ($app['ystartcount'] - $beforeyesterdaydata->sessions);
+            
+            $appDict [$beforeyesterdaydata->product_id] = $app;
+        }
+            
+        
 		if ($getIDsqlResult != null && $getIDsqlResult->num_rows () > 0) {
 			foreach ( $getIDsqlResult->result () as $row ) {
-				$app = array ();
+				$app = $appDict[$row->id];
+                
+                if(!$app){
+                    $app = array();
+                    $app ['newuser'] = '0' . '/' . '0';
+                    $app ['startcount'] = '0' . '/' . '0';
+                    $app ['startuser'] = '0' . '/' . '0';
+                    $app ['newUserYestoday'] = '0' . '/' . '0';
+                    $app ['startCountYestoday'] = '0' . '/' . '0';
+                    $app ['startUserYestoday'] = '0' . '/' . '0';
+                    
+                    $app ['newUserToday'] = 0;
+                    $app ['startCountToday'] = 0;
+                    $app ['startUserToday'] = 0;
+                
+                    $app ['totaluser'] = 0;
+                }
+                
 				$app ['name'] = $row->name;
 				$app ['id'] = $row->id;
-				foreach ( $todayquery->result () as $todaydata ) {
-					
-					foreach ( $yestadayquery->result () as $yestodaydata ) {
-						if ($row->name == $todaydata->product_name && $todaydata->product_name == $yestodaydata->product_name) {
-							$app ['newuser'] = $todaydata->newusers . '/' . $yestodaydata->newusers;
-							$app ['startcount'] = $todaydata->sessions . '/' . $yestodaydata->sessions;
-							$app ['startuser'] = $todaydata->startusers . '/' . $yestodaydata->startusers;
-							$app ['newUserYestoday'] = $yestodaydata->newusers;
-							$app ['startCountYestoday'] = $yestodaydata->sessions;
-							$app ['startUserYestoday'] = $yestodaydata->startusers;
-							
-							$app ['newUserToday'] = $todaydata->newusers;
-							$app ['startCountToday'] = $todaydata->sessions;
-							$app ['startUserToday'] = $todaydata->startusers;
-							$app ['platform'] = $todaydata->platform;
-							$app ['totaluser'] = $todaydata->allusers;
-							array_push ( $appList, $app );
-							$flag = 1;
-							break;
-						}
-                        
-					}
-					if ($flag == 1) {
-						break;
-					}
-                    
-				}
-				
-				if ($flag == 0) {
-					$app ['newuser'] = '0' . '/' . '0';
-					$app ['startcount'] = '0' . '/' . '0';
-					$app ['startuser'] = '0' . '/' . '0';
-					$app ['newUserYestoday'] = '0' . '/' . '0';
-					$app ['startCountYestoday'] = '0' . '/' . '0';
-					$app ['startUserYestoday'] = '0' . '/' . '0';
-					
-					$app ['newUserToday'] = 0;
-					$app ['startCountToday'] = 0;
-					$app ['startUserToday'] = 0;
-					$app ['platform'] = $row->platform;
-					$app ['totaluser'] = 0;
-					array_push ( $appList, $app );
-				}
-				$flag = 0;
                 
-			}
-		}
+                $app ['platform'] = $row->platform;
+                array_push ( $appList, $app );
+            }
+        }
 		
 		return $appList;
     }
 	
-	function getProductListByPlatform1($platformId, $userId, $today, $yestoday) {
+	function getProductListByPlatform($platformId, $userId, $today, $yestoday) {
 		
 		$getIDsql = "select p.id,p.name,f.name platform 
 		             from " . $this->db->dbprefix ( 'product' ) . "  p, 

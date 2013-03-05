@@ -11,18 +11,23 @@ class vida extends CI_Controller{
 		$this->load->library('form_validation');
 		$this->load->Model('common');
 		$this->common->requireLogin();
-		$this->common->requireProduct();
 		$this->load->model('product/productmodel','product');
 		//$this->load->model('product/versionmodel','versionmodel');
 		$this->load->model('product/vidaactiveusermodel', 'vidaactiveusermodel');
 	}
 	
-	function index()
-	{		
+	function view($productId = 0)
+	{
+        if(empty($productId)){
+            $this->common->requireProduct();
+        }else{
+            $this->data ['productId'] = $productId;
+            $this->common->setCurrentProduct ( $productId );
+            $currentProduct = $this->common->getCurrentProduct();
+        }
+        
 		$this->common->loadHeaderWithDateControl ();
-		$product = $this->common->getCurrentProduct();
-     	$productId = $product->id;     	
-		$date = date('Y-m-d H:00:00', time ()-(60*60));
+		$date = date('Y-m-d H:00:00', time ()-(60*60)-(5*60));
         
         $ret = $this->vidaactiveusermodel->getChannelData($productId, $date);
         
@@ -37,7 +42,7 @@ class vida extends CI_Controller{
         $fromTime = date('Y-m-d', strtotime($toTime)-86400);
         
 		$this->data['reportTitle'] = array(
-				'timePase' => getTimePhaseStr($fromTime, $toTime),
+				'timePase' => $toTime,
 				'activeUser'=>lang("v_rpt_ve_trendActiveUsers"),
 				'newUser'=>lang("v_rpt_ve_trendsAnalytics")
 		);
@@ -66,8 +71,9 @@ class vida extends CI_Controller{
         
 		$fromTime = $this->common->getFromTime ();
 		$toTime = $this->common->getToTime ();
+        
 		$this->data['reportTitle'] = array(
-                                           'timePase' => $toTime,
+                                           'timePase' => getTimePhaseStr($fromTime, $toTime),
                                            'activeUser'=>lang("v_rpt_ve_trendActiveUsers"),
                                            'newUser'=>lang("v_rpt_ve_trendsAnalytics")
                                            );
@@ -128,8 +134,9 @@ class vida extends CI_Controller{
 		$product = $this->common->getCurrentProduct ();
 
 		$productId = $product->id;
-		$toTime = $this->common->getToTime ();
-        $fromTime = date('Y-m-d', strtotime($toTime)-86400);
+
+		$toTime = date('Y-m-d', strtotime($this->common->getToTime())+86400);
+        $fromTime = $this->common->getToTime();
         
         $retdata = $this->vidaactiveusermodel->getChannelHourlyData($productId, $fromTime, $toTime);
 		//load markevent
@@ -158,8 +165,9 @@ class vida extends CI_Controller{
         
 		$productId = $product->id;
 		$fromTime = $this->common->getFromTime ();
-        
 		$toTime = $this->common->getToTime ();
+        
+        $toTime = date('Y-m-d', strtotime($toTime)+86400);
         
         $retdata = $this->vidaactiveusermodel->getChannelDailyData($productId, $fromTime, $toTime);
 		//load markevent

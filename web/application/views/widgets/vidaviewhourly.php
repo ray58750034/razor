@@ -187,9 +187,16 @@ function renderCharts(myurl)
                    var categories = [];
                    var newUsers = [];
                    var reportTitle;
+                   
+                   var checkDate = data.defdate;
+                   
+                   for(var m=0;m<checkDate.length;m++){
+                   var flag = 0;
                    for(var i=0;i<eachVersionData.length;i++)
                    {
                    var eachVersionDataItem = eachVersionData[i];
+                   
+                   if(checkDate[m] == eachVersionDataItem.datevalue){
                    if(chartName=="<?php echo  lang('t_newUsers')?>")
                    {
                    newUsers.push(parseInt(eachVersionDataItem.newusers,10));
@@ -200,7 +207,16 @@ function renderCharts(myurl)
                    newUsers.push(parseInt(eachVersionDataItem.startusers,10));
                    reportTitle="<?php echo $reportTitle['activeUser'] ?>";
                    }
-                   categories.push(eachVersionDataItem.datevalue.substr(11,13)+":00:00");
+                   flag = 1;
+                   break;
+                   }
+                   }
+                   
+                   if(!flag){
+                   newUsers.push(0);
+                   }
+                   categories.push(checkDate[m].substr(11,13)+":00:00");
+                   
                    }
                    options.series[j] = {};
                    if(version == "")
